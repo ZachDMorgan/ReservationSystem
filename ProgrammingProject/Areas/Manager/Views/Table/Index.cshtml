@@ -1,0 +1,38 @@
+﻿@model IReadOnlyCollection<Table>
+
+
+<h1>Index</h1>
+
+<a asp-action="Create">CreateTable</a>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <td>Table Id</td>
+            <td>Area Name</td>
+            <td>Table Name</td>
+            <td>Seat</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+
+        <tr>
+            <td>@f.Id</td>
+            <td>@f.Area.Name</td>
+            <td>@f.Name</td>
+            <td>@f.Seats</td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@f.Id">Edit</a>
+                <a asp-action="Delete" asp-route-id="@f.Id">Delete</a>
+
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,13 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Area.Delete
+
+<h1>Delete Area</h1>
+
+<form asp-action="Delete">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Name">@Model.Name</label>
+    </div>
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="RestaurantId" />
+</form>

@@ -1,0 +1,54 @@
+﻿@model ICollection<Reservation>
+
+<h1>Reservation Table Index</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>FirstName</td>
+            <td>Lastname</td>
+            <td>Phone</td>
+            <td>Start</td>
+            <td>Table(s)</td>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.Person.FirstName</td>
+                <td>@r.Person.Surname</td>
+                <td>@r.Person.Phone</td>
+                <td>@r.StartTime</td>
+                <td>
+                    @if (r.ReservationTables.Any())
+                    {
+                        foreach (var t in r.ReservationTables)
+                        {
+                            <p>@t.Table.Name</p>
+                            <a asp-action="Edit" asp-route-id="@r.Id">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@r.Id">Delete</a>
+                        }
+                    }
+                    else
+                    {
+                        <p>No Tables Assigned</p>
+                    }
+
+                </td>
+
+                <td>
+                    <a asp-action="Create" asp-route-id="@r.Id">Create</a>
+                    @*<a asp-action="Edit" asp-route-id="@r.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@r.Id">Delete</a>*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

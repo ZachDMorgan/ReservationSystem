@@ -1,0 +1,124 @@
+﻿@model List<ProgrammingProject.Models.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "StaffList";
+    var um = (ViewBag.UserManager as UserManager<ApplicationUser>);
+}
+
+<style>
+    .btn-manager {
+        min-width: 150px;
+    }
+</style>
+
+<h1>Managers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Manager's Role
+            </th>
+            <th>
+                Actions
+            </th>
+            <th>
+            </th>
+            <th />
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in um.Users.ToArray())
+        {
+            bool isManager = await um.IsInRoleAsync(u, "Manager");
+            bool isStaff = await um.IsInRoleAsync(u, "Staff");
+            if (isManager == true && isStaff == true)
+            {
+                <tr>
+                    <td>@u.UserName</td>
+                    <td>
+
+                        <input type="button" id="managerButton" class="btn-manager btn btn-@(isManager ? "danger" : "success")" data-user="@u.Id" data-action="@(isManager ? "remove" : "add")" value="@(isManager ? "Remove" : "Add")" />
+                    </td>
+
+                    <td>
+                        <form asp-action="DeleteUser" asp-route-id="@u.Id" method="post">
+                            <a asp-action="EditStaff" asp-controller="Admin" asp-route-id="@u.Id" class="btn btn-primary">Edit</a>
+
+                            <span id="confirmDeleteSpan_@u.Id" style="display:none">
+                                <span>Are you sure you want to delete?</span>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                                <button type="button" class="btn btn-primary" onclick="confirmDelete('@u.Id', false)">No</button>
+                            </span>
+
+                            <span id="deleteSpan_@u.Id">
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete('@u.Id', true)">Delete</button>
+                            </span>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h1>Staff</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Manager's Role
+            </th>
+            <th>
+                Actions
+            </th>
+            <th>
+            </th>
+            <th />
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in um.Users.ToArray())
+        {
+            bool isManager = await um.IsInRoleAsync(u, "Manager");
+            bool isStaff = await um.IsInRoleAsync(u, "Staff");
+            if (isStaff == true && isManager == false)
+            {
+                <tr>
+                    <td>@u.UserName</td>
+                    <td>
+
+                        <input type="button" id="managerButton" class="btn-manager btn btn-@(isManager ? "danger" : "success")" data-user="@u.Id" data-action="@(isManager ? "remove" : "add")" value="@(isManager ? "Remove" : "Add")" />
+                    </td>
+
+                    <td>
+                        <form asp-action="DeleteUser" asp-route-id="@u.Id" method="post">
+                            <a asp-action="EditStaff" asp-controller="Admin" asp-route-id="@u.Id" class="btn btn-primary">Edit</a>
+
+                            <span id="confirmDeleteSpan_@u.Id" style="display:none">
+                                <span>Are you sure you want to delete?</span>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                                <button type="button" class="btn btn-primary" onclick="confirmDelete('@u.Id', false)">No</button>
+                            </span>
+
+                            <span id="deleteSpan_@u.Id">
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete('@u.Id', true)">Delete</button>
+                            </span>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/ManagerFunctions.js"></script>
+}

@@ -1,0 +1,50 @@
+﻿@model ProgrammingProject.Areas.Staff.Models.Reservation.Update
+@{
+    ViewData["Title"] = "Update Reservation Status";
+}
+<h1>Update Reservation Status</h1>
+
+<form asp-action="UpdateStatus">
+    <div asp-validation-summary="All"></div>
+    <table class="table table-striped border">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Guests</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.Id</th>
+                <td>@Model.FirstName</td>
+                <td>@Model.Surname</td>
+                <td>@Model.Phone</td>
+                <td>@Model.Email</td>
+                <td>@Model.StartTime</td>
+                <td>@Model.Duration</td>
+                <td>@Model.Guests</td>
+                <td>@Model.Notes</td>
+                <td>
+                    <div class="form-group">
+                        <select asp-for="StatusId" asp-items="Model.Status" class="form-control">
+                        </select>
+                        <span asp-validation-for="StatusId" class="text-danger">*</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Save" class="btn btn-success" style="color:#fff" />
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <input type="hidden" asp-for="Id" value="@Model.SittingId" />
+</form>
+
+<div>Please note that a reservation's status cannot be Seated or Complete until at least one table is assigned</div>

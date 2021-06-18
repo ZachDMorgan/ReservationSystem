@@ -1,0 +1,34 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Table.Edit
+
+
+<h1>Edit Table</h1>
+
+
+<form asp-action="Edit">
+    <div asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger">*</span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Seats"></label>
+        <input asp-for="Seats" class="form-control" />
+        <span asp-validation-for="Seats" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AreaId">Area</label>
+        <select asp-for="AreaId" asp-items="Model.Areas" class="form-control">
+            <option value="">Please select an Area</option>
+        </select>
+        <span asp-validation-for="AreaId" class="text-danger">*</span>
+    </div>
+
+
+    <input type="submit" value="Save" class="btn btn-success" />
+    <input type="hidden" asp-for="Id" />
+</form>

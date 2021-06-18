@@ -1,0 +1,121 @@
+﻿@model IReadOnlyCollection<SittingType>
+
+
+
+<form asp-action="Create" class="container" onsubmit="return ValidateAreaName(this)">
+    <div class="row p-2">
+
+        <label class="p-1">Create Sitting Type</label>
+        <input id="Description" name="Description" required class="pl-1 mr-2" onchange="areaNameChecking()" />
+        @if (ViewBag.Message != null && ViewBag.Message == "Exist")
+        {
+            <br /><span style="color: red;">Name Exist</span>
+        }
+        @*<span class="text-danger" id="txtTable_Help">*</span>*@
+        <br /><p id="SittingTypeErrorMessage"></p>
+        <input type="submit" value="Add" class="btn btn-secondary" />
+    </div>
+</form>
+
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <th scope="col" class="areas">Id</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+
+            <tr>
+                <td>
+                    <form asp-action="Edit" class="input-group">
+
+                        <input id="Description" name="Description" value="@f.Description" class="form-control" required />
+
+                        <input type="submit" value="Change Name" class="btn btn-secondary input-group-append" />
+                        <input id="Id" name="Id" type="hidden" value="@f.Id" />
+                    </form>
+                </td>
+               
+                <td>
+                    
+                    <form asp-action="Delete" asp-route-id="@f.Id" onclick="return confirm('Are you sure you want to delete this sitting type?')">
+                        <input type="submit" value="Delete Sitting Type" class="btn btn-warning mt-1 mb-1" />
+                    </form>
+                    
+                </td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+@section Scripts{ 
+
+<script>
+    function GetSittingTypeIdToModal(sittingTypeId) {
+        $("#createTableModal #AreaId").val(areaId * 1);
+    }
+</script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Index</h1>
+
+<a asp-action="Create">Create Sitting type</a>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <td> Id</td>
+            <td>Description</td>
+            <td>Action</td>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+
+            <tr>
+                <td>@f.Id</td>
+                <td>@f.Description</td>
+                
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@f.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@f.Id">Delete</a>
+
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

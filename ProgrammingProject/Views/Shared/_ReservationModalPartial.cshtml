@@ -1,0 +1,140 @@
+﻿<!-- Button trigger modal -->
+<button type="button" class="btn nav-link text-dark navItems" data-toggle="modal" data-target="#reservationModal">
+    Make a Reservation
+</button>
+
+<!-- Modal -->
+<div class="modal" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Make a Reservation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="booking" asp-area="" asp-controller="Reservation" asp-action="Create" class="container-fluid needs-validation" onsubmit="return validateAll_Hon(this)" novalidate>
+                    <div class="row">
+                        <div class="form-group col-lg">
+                            <label>Guests</label>
+                            <select id="Guests" name="Guests" class="form-control pax">
+                                <option value="">Please select a number of guests</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg" id="datesGroup" style="display:none">
+                            <label>Available Dates</label>
+                            <select id="dates" class="form-control">
+                                <option value="">Please choose a date</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg" id="timesGroup" style="display:none">
+                            <label>Start</label>
+                            <select id="StartTime" class="form-control" name="StartTime">
+                                <option value="">Please choose a time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="finalInputs" class="row" style="display:none">
+
+
+                        @if (User.IsInRole("Member"))
+                        {
+
+                            <div class="form-group col-12">
+                                <label>Notes</label>
+                                <input id="Notes" name="Notes" class="form-control" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>FirstName</label>
+                                    <input id="FirstName" name="FirstName" class="form-control" onblur="return validateFirstName(txtfirstname_Help);" required />
+                                    <span class="text-danger" id="txtfirstname_Help">*</span>
+                                    <div class="invalid-feedback">
+                                        Please enter your first name.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Surname</label>
+                                    <input id="Surname" name="Surname" class="form-control" onblur="return validateSurName(txtSurname_Help)" required />
+                                    <span class="text-danger" id="txtSurname_Help"></span>
+                                    <div class="invalid-feedback">
+                                        Please enter your surname.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Phone</label>
+                                    <input id="Phone" name="Phone" class="form-control" type="number" onblur="return validatePhoneNo(txtPhone_Help)" required />
+                                    <span class="text-danger" id="txtPhone_Help"></span>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid phone number.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Email</label>
+                                    <input id="Email" name="Email" class="form-control" onblur="return validateEmailHon(Email_Help2)" required />
+                                    <span class="text-danger" id="Email_Help2"></span>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email address.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Notes</label>
+                                    <input id="Notes" name="Notes" class="form-control" />
+                                </div>
+                            </div>
+                        }
+
+                        <p id="bookingErrorMessage"></p>
+                        <input type="submit" value="Save" class="btn btn-success col-md-12" style="color:#fff" id="submit" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <span class="col-md">For the following:</span>
+                        <ul class="col-md-6">
+                            <li>
+                                Enquiries
+                            </li>
+                            <li>
+                                Bookings larger than 12
+                            </li>
+                            <li>
+                                Reservations longer than the standard 90 minutes
+                            </li>
+                        </ul>
+                        <span class="col-md text-info"><u>Please call 98765432.</u></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a onclick="showInBody('@Url.Action("Privacy","Home",null,Context.Request.Scheme)'); $('.modal').modal('toggle')" class="text-primary footer-link">Privacy, Terms and Conditions</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

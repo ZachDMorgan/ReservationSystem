@@ -1,0 +1,34 @@
+﻿@model ProgrammingProject.Data.Reservation
+@{
+    ViewData["Title"] = "Success!";
+}
+<div class="text-center">
+    <h2 class="display-6">Thanks for booking with us.</h2>
+</div>
+<div class="d-flex justify-content-center mt-4">
+    <p >Reservation Summary</p>
+    <ul>
+        <li>
+            Name: @Model.Person.FirstName  @Model.Person.Surname
+        </li>
+        <li>
+            Email: @Model.Person.Email
+        </li>
+        <li>
+            Phone: @Model.Person.Phone
+        </li>
+        <li>
+            Date and Time: @Model.StartTime
+        </li>
+        <li>
+            Number of Guests: @Model.Guests
+        </li>
+        @if (Model.Notes != null)
+        {
+            <li>
+                Notes: @Model.Notes
+            </li>
+        }
+
+    </ul>
+</div>

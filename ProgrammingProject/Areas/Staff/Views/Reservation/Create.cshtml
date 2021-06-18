@@ -1,0 +1,74 @@
+﻿@model ProgrammingProject.Areas.Staff.Models.Reservation.Create
+@{
+    ViewData["Title"] = "Make a Reservation";
+}
+<h1>Make a Reservation</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger">*</span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Surname"></label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Guests"></label>
+        <input asp-for="Guests" class="form-control" />
+        <span asp-validation-for="Guests" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AvailableTimes"></label>
+        <select asp-for="StartTime" asp-items="Model.AvailableTimes" class="form-control">
+            <option value="">Please select a booking time</option>
+        </select>
+        <span asp-validation-for="AvailableTimes" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notes"></label>
+        <input asp-for="Notes" class="form-control" />
+        <span asp-validation-for="Notes" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Duration"></label>
+        <input asp-for="Duration" class="form-control" value="90" />
+        <span asp-validation-for="Duration" class="text-danger">*</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SourceId"></label>
+        <select asp-for="SourceId" asp-items="Model.Sources" class="form-control">
+            <option value="">Please select the source type</option>
+        </select>
+        <span asp-validation-for="SourceId" class="text-danger">*</span>
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-success" style="color:#fff" />
+    <input type="hidden" asp-for="SittingId" value="@Model.SittingId" />
+
+
+</form>
+

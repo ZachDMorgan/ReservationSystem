@@ -1,0 +1,13 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Area.Edit
+
+<h1>EditArea</h1>
+<form asp-action="Edit">
+    <div>
+        <label asp-for="Name">Area</label>
+        <input asp-for="Name" />
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-dark" />
+    <input type="hidden" asp-for="Id" />
+
+</form>

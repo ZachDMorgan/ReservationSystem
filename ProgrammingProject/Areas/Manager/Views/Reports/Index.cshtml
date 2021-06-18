@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <link href="~/css/reports.css" rel="stylesheet" />
+</head>
+
+<h1>Reports</h1>
+
+<div class="container-square">
+    <a class="square" asp-area="Manager" asp-controller="Reports" asp-action="ReservationsReportWeek">
+        <div class="content">
+            Reservation Weekly Report
+        </div>
+        <div class="button">
+        </div>
+    </a>
+    <a class="square" asp-area="Manager" asp-controller="Reports" asp-action="ReservationsReportMonth">
+        <div class="content">
+            Reservation Monthly Report
+        </div>
+    </a>
+    <a class="square" asp-action="Graphs">
+        <div class="content">
+            PAX & Capacity By Sitting Report
+        </div>
+    </a>
+    <a class="square" asp-area="Manager" asp-controller="Reports" asp-action="ReservationsReport">
+        <div class="content">
+            Reservations Total Report
+        </div>
+    </a>
+</div>

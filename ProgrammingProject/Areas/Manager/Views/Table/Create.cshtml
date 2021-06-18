@@ -1,0 +1,23 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Table.Table
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="Name">Table Name</label>
+        <input asp-for="Name" />
+    </div>
+    <div>
+        <label asp-for="Seats">Seats</label>
+        <input asp-for="Seats" />
+    </div>
+
+    @*<div>
+        <label asp-for="AreaId">Area</label>
+        <select asp-for="AreaId" asp-items="Model.Areas">
+            <option>select the area you like</option>
+        </select>
+    </div>*@
+
+
+    <input type="submit" value="Add" class="btn btn-dark" />
+    
+</form>

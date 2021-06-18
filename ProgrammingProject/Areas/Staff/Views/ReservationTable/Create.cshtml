@@ -1,0 +1,27 @@
+﻿@model ProgrammingProject.Areas.Staff.Models.ReservationTable.Create
+
+<h1>AssignTableXYZ</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <label asp-for="ReservationId">@Model.ReservationId</label>
+
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label asp-for="TableId">Table</label>
+        <select asp-for="TableId" asp-items="Model.Tables" class="form-control">
+            <option value="">Please select a Table</option>
+        </select>
+        <span asp-validation-for="TableId" class="text-danger">*</span>
+    </div>
+
+
+    <input type="submit" value="Add" class="btn btn-success" />
+    <input type="hidden" asp-for="Id" />
+</form>

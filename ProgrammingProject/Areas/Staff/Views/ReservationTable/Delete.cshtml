@@ -1,0 +1,26 @@
+﻿@model ProgrammingProject.Areas.Staff.Models.ReservationTable.Delete
+<h1>sure to delete ResTable</h1>
+
+<form asp-action="Delete">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Id">Id:@Model.Id</label>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReservationId">ReservationID: @Model.ReservationId</label>
+    </div>
+    <div class="form-group">
+        <label asp-for="TableId">TableId: @Model.TableId</label>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tables">TableName:@Model.Tables</label>
+    </div>
+
+
+    <input type="submit" value="Delete" class="btn btn-danger" style="color:#fff" />
+
+    <input type="hidden" asp-for="Id" />
+
+
+</form>

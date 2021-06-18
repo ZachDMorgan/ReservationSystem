@@ -1,0 +1,29 @@
+﻿body {
+    background-image: url('../photos/brooke-lark-background-opaque.jpg');
+    background-repeat:no-repeat,no-repeat;
+    background-position: 30% 0%;
+}
+.about{
+    max-width:75%;
+}
+
+.title {
+    font-size:x-large;
+}
+
+@media (max-width: 991.98px) {
+    .navItems {
+        font-size:16px;
+        background: #f8f9fb;
+    }
+}
+@media (max-width: 767.98px) {
+    .navItems {
+        font-size: 20px;
+        background: #f8f9fb;
+    }
+}
+
+.menu:hover {
+    box-shadow: 0 0 1px 5px pink;
+}

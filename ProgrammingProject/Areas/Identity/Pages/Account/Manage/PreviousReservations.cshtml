@@ -1,0 +1,48 @@
+﻿@page
+@model PreviousReservationsModel
+@{
+    ViewData["Title"] = "Previous Reservations";
+    ViewData["ActivePage"] = ManageNavPages.PreviousReservations;
+    var reservations = ViewData["PreviousReservations"] as List<PreviousReservationsModel.PreviousReservationModel>;
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md">
+        <table class="table table-striped border">
+            <thead>
+                <tr>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Number of Guests</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Tables</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach (var reservation in reservations)
+                    {
+                        <tr>
+                                            <td>@reservation.StartTime.ToShortDateString() @reservation.StartTime.ToShortTimeString()</td>
+                            <td>@reservation.Duration minutes</td>
+                            <td>@reservation.Guests</td>
+                            <td>@reservation.Notes</td>
+                            <td>@reservation.ReservationStatus.Description</td>
+                            <td>
+                                @if (reservation.Tables.Count() != 0)
+                                {
+                                    foreach (var table in reservation.Tables)
+                                    {
+                                        <button type="button" class="btn btn-primary m-1">@table.Name</button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

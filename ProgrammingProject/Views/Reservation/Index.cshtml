@@ -1,0 +1,36 @@
+﻿@*//This is kinda moot now - shouldnt ever be accessed*@
+
+@model List<ProgrammingProject.Data.Sitting>
+@{
+    ViewData["Title"] = "Make a Reservation";
+}
+<h1>Make a Reservation</h1>
+
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Sitting</th>
+            <th scope="col">Date</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ foreach (var sitting in Model)
+            {
+                <tr>
+                    <th scope="row">@sitting.Id</th>
+                    <td>@sitting.SittingType.Description</td>
+                    <td>@sitting.StartTime.ToShortDateString()</td>
+                    <td>@sitting.StartTime.TimeOfDay</td>
+                    <td>@sitting.EndTime.TimeOfDay</td>
+                    <td>
+                        <a asp-action="Create" asp-route-id="@sitting.Id" class="btn btn-info">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

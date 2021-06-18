@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-ProgrammingProject-2F0E98D3-F744-41F3-81FB-338A8B453974</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20210507022643_sorry_had_to_nuke.cs" />
+    <Compile Remove="Data\Migrations\20210507022643_sorry_had_to_nuke.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523030631_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523030631_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523031851_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523031851_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523032913_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523032913_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523035013_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523035013_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523041404_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523041404_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523042722_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523042722_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523043242_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523043242_rolesAuthorization.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210523043842_rolesAuthorization.cs" />
+    <Compile Remove="Data\Migrations\20210523043842_rolesAuthorization.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Manager\Views\Shared\Components\NavigationMenu\Default.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Manager\Data\" />
+    <Folder Include="Areas\Member\Data\" />
+    <Folder Include="Areas\Member\Models\" />
+    <Folder Include="Areas\Member\Views\" />
+    <Folder Include="Areas\Staff\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+    <None Include="Areas\Manager\Views\Shared\Components\NavigationMenu\Default.cshtml" />
+    <None Include="Views\Admin\CreateRole.cshtml" />
+    <None Include="Views\Admin\CreateUser.cshtml" />
+    <None Include="Views\Admin\Delete.cshtml" />
+    <None Include="Views\Admin\EditRolePermission.cshtml" />
+    <None Include="Views\Admin\EditUser.cshtml" />
+    <None Include="Views\Admin\Roles.cshtml" />
+    <None Include="Views\Admin\StaffList.cshtml" />
+  </ItemGroup>
+
+</Project>

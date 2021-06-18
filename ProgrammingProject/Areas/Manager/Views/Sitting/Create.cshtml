@@ -1,0 +1,135 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Sitting.Create
+
+
+
+<h1>View</h1>
+
+<h4>Sitting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form name="sitting" asp-action="Create" onsubmit=" return validateAll(this);">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="SittingTypeId" class="control-label"></label>
+                <select asp-for="SittingTypeId" class="form-control" asp-items="Model.SittingType"></select>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group date" id="datepicker">
+                    <label asp-for="StartTime" class="control-label"></label>
+                    <input asp-for="StartTime" type="text" class="form-control" id="start1" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group date" id="datepicker1">
+                    <label asp-for="EndTime" class="control-label"></label>
+                    <input asp-for="EndTime" type="text" class="form-control" id="end1" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+
+                </div>
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" id="cap1" onblur="return validateCapacity(txtCap_Help)" />
+                <span asp-validation-for="Capacity" class="text-danger" id="txtCap_Help"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Open" class="control-label"></label>
+                <input type="checkbox" asp-for="Open" class="form-control" />
+            </div>
+            <p id="formErrorMessage"></p>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @*// This is the bootstrap Datetime picker source https://cdnjs.com/libraries/bootstrap-datetimepicker and https://getdatepicker.com/4/
+    // just a demo from stackoverflow how pp use it https://stackoverflow.com/questions/62049179/how-to-use-datepicker-on-mvc-core-in-asp-form*@
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="~/momentLocale/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <script>
+        $(function () {
+            $('#datepicker').datetimepicker({locale:'en-au'});
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#datepicker1').datetimepicker({ locale: 'en-au' });
+        });
+    </script>
+    <script>
+        
+            
+            function validateCapacity(helpText) {
+                var capacity = document.getElementById("cap1").value;
+                if (capacity > 40) {
+                    helpText.innerHTML = "Capacity should be not be more than 40";
+                    return false;
+                }
+                if (capacity < 1) {
+                    helpText.innerHTML = "Capacity should be not be less than 1";
+                    return false;
+                }
+                else {
+                    helpText.innerHTML = "";
+                    return ture
+                }
+            }
+
+        function validateAll(form) {
+            var capacity1 = document.forms["sitting"]["cap1"].value;
+            if (!capacity1) {
+                document.getElementById('formErrorMessage').innerText = "error in capacity please check";
+                return false;
+            }
+            if (capacity1 > 40 || capacity1 < 1) {
+                document.getElementById('formErrorMessage').innerText = "error in capacity number please check";
+                return false;
+            }
+            
+
+//            var start = document.getElementById("start1").value;
+            var start = $('#datepicker').data("DateTimePicker").date().valueOf()            
+//            var end = document.getElementById("end1").value;
+            var end = $('#datepicker1').data("DateTimePicker").date().valueOf()            
+            if (end.valueOf() < start.valueOf()) {
+                alert("end time cannot be smaller than start time");
+                return false;
+             };
+            
+            document.getElementById('formErrorMessage').innerText = "";
+            return true;
+        }
+        
+    </script>
+
+
+}
+

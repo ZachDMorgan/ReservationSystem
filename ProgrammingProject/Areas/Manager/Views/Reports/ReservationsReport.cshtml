@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ProgrammingProject.Data.Reservation>
+
+@{
+    ViewData["Title"] = "ReservationsReport";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Member Name
+            </th>
+            <th>
+                Date and Time
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Number of Guests
+            </th>
+            <th>
+                Notes
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Tables
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{ var fullname = item.Person.FirstName + " " + item.Person.Surname;
+                        @Html.DisplayFor(m => fullname)
+
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Guests)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservationStatus.Description)
+                </td>
+                <td>
+                    @if (item.ReservationTables.Count() != 0)
+                    {
+                        foreach (var table in item.ReservationTables)
+                        {
+                            <span>@table.Table.Name</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

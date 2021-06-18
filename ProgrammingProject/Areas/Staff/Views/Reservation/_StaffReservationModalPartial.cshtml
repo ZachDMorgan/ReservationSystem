@@ -1,0 +1,113 @@
+﻿
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
+    Make a Reservation
+</button>
+
+<!-- Modal -->
+<div class="modal" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Make a Reservation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="staffBooking" asp-area="Staff" asp-controller="Reservation" asp-action="Create" class="container-fluid needs-validation" onsubmit="return staffValidateAll_Hon1(this)" novalidate>
+                    <div class="row">
+                        <div class="form-group col-lg">
+                            <label>Guests</label>
+                            <select id="Guests" name="Guests" class="form-control pax">
+                                <option value="">Please select a number of guests</option>
+                                @for (int i = 1; i < 200; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-lg" id="datesGroup" style="display:none">
+                            <label>Available Dates</label>
+                            <select id="dates" class="form-control">
+                                <option value="">Please choose a date</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg" id="timesGroup" style="display:none">
+                            <label>Start</label>
+                            <select id="StartTime" class="form-control" name="StartTime">
+                                <option value="">Please choose a time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="finalInputs" class="row" style="display:none">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>FirstName</label>
+                                <input id="FirstName" name="FirstName" class="form-control" onblur="return staffValidateFirstName(txtstaffFirstname_Help)" required />
+                                <span class="text-danger" id="txtstaffFirstname_Help">*</span>
+                                <div class="invalid-feedback">
+                                    Please enter your first name.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Surname</label>
+                                <input id="Surname" name="Surname" class="form-control" onblur="return staffValidateSurName(txtstaffSurname_Help)" required />
+                                <span class="text-danger" id="txtstaffSurname_Help">*</span>
+                                <div class="invalid-feedback">
+                                    Please enter your surname.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Phone</label>
+                                <input id="Phone" name="Phone" class="form-control" type="number" onblur="return staffValidatePhoneNo(txtstaffPhone_Help)" required />
+                                <span class="text-danger" id="txtstaffPhone_Help">*</span>
+                                <div class="invalid-feedback">
+                                    Please enter a valid phone number.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input id="Email" name="Email" class="form-control" type="email" onblur="return staffValidateEmailHon(txtstaffEmail_Help)" required />
+                                <span class="text-danger" id="txtstaffEmail_Help">*</span>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Duration</label>
+                                <input id="Duration" name="Duration" value="90" class="form-control" type="number" required />
+                                <div class="invalid-feedback">
+                                    Please enter a valid number address.
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Reservation Source</label>
+                                <select id="SourceId" name="SourceId" class="form-control" required>
+                                    <option value="">Please choose a source</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Notes</label>
+                                <input id="Notes" name="Notes" class="form-control" />
+                            </div>
+                        </div>
+                        <p id="staffBookingErrorMessage"></p>
+                        <input type="submit" value="Save" class="btn btn-success col-md-12" style="color:#fff" id="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+
+    <script src="~/js/StaffReservationValidation.js"></script>
+}
+
+

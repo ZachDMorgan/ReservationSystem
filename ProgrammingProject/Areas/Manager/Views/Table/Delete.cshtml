@@ -1,0 +1,22 @@
+﻿@model ProgrammingProject.Areas.Manager.Models.Table.Delete
+
+<h1>Are you sure you want to delete Table</h1>
+
+<form asp-action="Delete">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Name">@Model.Name</label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Seats">@Model.Seats</label>
+    </div>
+    <div class="form-group">
+        <label asp-for="Areas">@Model.Areas</label>
+    </div>
+
+    <input type="submit" value="Delete" class="btn btn-danger" style="color:#fff" />
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="AreaId" />
+
+</form>

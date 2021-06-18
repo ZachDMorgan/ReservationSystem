@@ -1,0 +1,68 @@
+﻿@model List<ProgrammingProject.Areas.Staff.Models.Reservation.Sitting>
+@{
+    ViewData["Title"] = "Make a Reservation";
+}
+<div class="body">
+    <h1>Manage Reservations</h1>
+
+    <partial name="_StaffReservationModalPartial" />
+
+    <table class="table table-striped border">
+        <thead>
+            <tr>
+                <th scope="col">Sitting</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Open</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ foreach (var sitting in Model)
+                {
+                    <tr>
+                        <td>@sitting.SittingType.Description</td>
+                        <td>@sitting.StartTime</td>
+                        <td>@sitting.EndTime</td>
+                        <td>@sitting.Pax / @sitting.Capacity</td>
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <td>
+                                <input type="button" id="managerButton" class="btn-manager btn btn-@(sitting.Open?"success":"danger")" data-sitting="@sitting.Id" data-action="@(sitting.Open? "close":"open")" value="@(sitting.Open?"Open":"Closed")" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @{
+                                    if (sitting.Open)
+                                    { <span>Open</span> }
+                                    else
+                                    { <span>Closed</span> }
+                                }
+                            </td>
+                        }
+                        <td>
+                            @if (sitting.AreThereReservations == true)
+                            {
+                                <a asp-action="Update" asp-route-id="@sitting.Id" class="btn btn-primary">Manage</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-secondary text-white">No reservations yet!</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/StaffReservationModal.js"></script>
+}
+

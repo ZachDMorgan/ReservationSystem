@@ -1,0 +1,58 @@
+﻿@model List<ProgrammingProject.Models.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "StaffList";
+    var um = (ViewBag.UserManager as UserManager<ApplicationUser>);
+}
+
+<style>
+    .btn-manager {
+        min-width: 150px;
+    }
+</style>
+
+<h1>Members</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in um.Users.ToArray())
+        {
+            bool isMember = await um.IsInRoleAsync(u, "Member");
+            if (isMember == true)
+            {
+        <tr>
+            <td>@u.UserName</td>
+            <td>
+                <form asp-action="DeleteUser" asp-route-id="@u.Id" method="post">
+                    <a asp-action="EditStaff" asp-controller="Admin" asp-route-id="@u.Id" class="btn btn-primary">Edit</a>
+
+                    <span id="confirmDeleteSpan_@u.Id" style="display:none">
+                        <span>Are you sure you want to delete?</span>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-primary" onclick="confirmDelete('@u.Id', false)">No</button>
+                    </span>
+
+                    <span id="deleteSpan_@u.Id">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('@u.Id', true)">Delete</button>
+                    </span>
+                </form>
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/ManagerFunctions.js"></script>
+}

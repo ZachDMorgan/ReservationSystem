@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Crocodile Dilemma</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/customerSite.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light  mb-3 text-dark ">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse navItems justify-content-center">
+                    <partial name="_LoginPartial"/>
+                    <ul class="navbar-nav flex-grow-3">
+                        @{ if (User.IsInRole("Staff"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Staff" asp-controller="Home" asp-action="Index">Staff Home</a>
+                                </li>
+                                if (User.IsInRole("Manager"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Manager" asp-controller="Home" asp-action="Index">Manager Home</a>
+                                    </li>
+                                }
+                            }
+                            else if (Context.Request.Path.StartsWithSegments("/Reservation/ReservationMade"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                            }
+                            else
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" onclick="showInBody('@Url.Action("About","Home",null,Context.Request.Scheme)')">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" onclick="showInBody('@Url.Action("WhatsOn","Home",null,Context.Request.Scheme)')">What's On</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" onclick="showInBody('@Url.Action("Menu","Home",null,Context.Request.Scheme)')">Menu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" onclick="showInBody('@Url.Action("Contact","Home",null,Context.Request.Scheme)')">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <partial name="_ReservationModalPartial" />
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4">Crocodile Dilemma</h1>
+        </div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-right">
+        <div class="container">
+            &copy; 2021 - ProgrammingProject - <a onclick="showInBody('@Url.Action("Privacy","Home",null,Context.Request.Scheme)')" class="text-primary footer-link">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ReservationModal.js"></script>
+    
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

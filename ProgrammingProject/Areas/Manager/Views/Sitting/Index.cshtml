@@ -1,0 +1,233 @@
+﻿@model IReadOnlyCollection<Sitting>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Manage Sittings</h1>
+
+<button type="button" class="btn btn-primary createSitting" data-toggle="modal" data-target="#createSittingModal">
+    Create Sitting
+</button>
+<button type="button" class="btn btn-info manageSittingType" data-toggle="modal" data-target="#editSittingTypesModal" onclick="">
+    Manage Sitting Types
+</button>
+
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <td scope="col">Sitting Type</td>
+            <td scope="col">Start Time</td>
+            <td scope="col">End Time</td>
+            <td scope="col">Capacity</td>
+            <td scope="col">Open</td>
+            <td scope="col">Manage</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sitting in Model)
+        {
+            <tr>
+                <td>@sitting.SittingType.Description</td>
+                <td>@sitting.StartTime</td>
+                <td>@sitting.EndTime</td>
+                <td>@sitting.Capacity</td>
+                <td>
+                    <input type="button" id="managerButton" class="btn-manager btn btn-@(sitting.Open?"success":"danger")" data-sitting="@sitting.Id" data-action="@(sitting.Open? "close":"open")" value="@(sitting.Open?"Open":"Closed")" />
+                </td>
+                <td>
+                    @if (sitting.Reservations.Count == 0)
+                    {
+
+                        <button type="button" class="btn btn-warning editSitting d-flex flex-column flex-grow-1" data-toggle="modal" data-target="#editSittingModal" data-id="@sitting.Id">
+                            Edit Sitting
+                        </button>
+                        <form asp-action="Delete" asp-route-id="@sitting.Id" onclick="return confirm('Are you sure you want to delete this reservation?')">
+                            <input type="submit" value="Delete Sitting" class="btn btn-danger mt-1 mb-1" />
+                        </form>
+                    }
+                    else
+                    {
+                        int pax = 0;
+                        foreach (var reservation in sitting.Reservations)
+                        {
+                            pax += reservation.Guests;
+                        }
+                        if (pax < sitting.Capacity)
+                        {
+                            <span>@pax / @sitting.Capacity PAX</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger"><b>@pax / @sitting.Capacity PAX</b></span>
+                        }
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal" id="createSittingModal" role="dialog" aria-labelledby="createSittingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create a Sitting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" class="container-fluid needs-validation"  novalidate>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label class="control-label">Sitting Type</label>
+                                <select id="SittingTypeId" name="SittingTypeId" class="form-control SittingTypeId" required>
+                                    <option value="">Please choose a sitting type</option>
+                                    <option value="-1">Custom</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Need to pick a type
+                                </div>
+                            </div>
+
+                            <div class="form-group customSittingType">
+                                <label class="control-label">Custom Sitting Type</label>
+                                <input id="CustomSittingType" name="CustomSittingType" type="text" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group date" id="datepicker">
+                                    <label class="control-label">Start Time</label>
+                                    <input id="StartTime" name="StartTime" type="text" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group date" id="datepicker1">
+                                    <label class="control-label">End Time</label>
+                                    <input id="EndTime" name="EndTime" type="text" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Capacity</label>
+                                <input id="Capacity" name="Capacity" type="number" class="form-control" onblur="return validateCapacity(txtCap_Help)" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Open/Closed</label>
+                                <input type="checkbox" id="OpenCheckbox"  class="form-control" checked="checked" />
+                            </div>
+                            <p id="formErrorMessage" style="color: red;"></p>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" onclick="return validateAll(this);" />
+                            </div>
+                            <input id="Open" name="Open" value=true type="hidden" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="editSittingModal" role="dialog" aria-labelledby="editSittingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Sitting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit" class="container-fluid needs-validation"  novalidate>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label class="control-label">Sitting Type</label>
+                                <select id="EditSittingTypeId" name="EditSittingTypeId" class="form-control SittingTypeId">
+                                    <option value="">Please choose a sitting type</option>
+                                    <option value="-1">Custom</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group customSittingType">
+                                <label class="control-label">Custom Sitting Type</label>
+                                <input id="CustomSittingType" name="CustomSittingType" type="text" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group date" id="datepicker">
+                                    <label class="control-label">Start Time</label>
+                                    <input id="EditStartTime" name="EditStartTime" type="text" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group date" id="datepicker1">
+                                    <label class="control-label">End Time</label>
+                                    <input id="EditEndTime" name="EditEndTime" type="text" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Capacity</label>
+                                <input id="EditCapacity" name="EditCapacity" type="number" class="form-control" onblur="return validateCapacity(txtCap_Help)" />
+                            </div>
+                            <p id="formErrorMessage"></p>
+                            <div class="form-group">
+                                <input type="submit" value="Edit" class="btn btn-primary" />
+                            </div>
+                            <input id="EditId" name="EditId" type="hidden"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="editSittingTypesModal" tabindex="-1" role="dialog" aria-labelledby="editSittingTypesModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Manage Sitting Types</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <p>Please be advised: only Sitting Types that have not been assigned to a sitting may be deleted.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+}
+
+@section Scripts{
+    @* Below needs to go in its own file *@
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="~/js/SittingModals.js"></script>
+}
